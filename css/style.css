@@ -1,0 +1,53 @@
+.header {
+    background: url('../img/whiskey.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: auto;
+        /*height: 25rem;*/
+    color: "white";
+}
+
+.header-text {
+    color: #FFFFFF;
+    /*font-size: 48px;*/
+}
+
+h2 {
+  color: white;
+  font-size: 3.0rem;
+  line-height: 110%;
+  margin: 1.78rem 0 1.424rem 0;
+}
+
+nav .brand-logo {
+  position: absolute;
+  color: #fff;
+  display: inline-block;
+  font-size: 2.1rem;
+  padding: 0;
+  white-space: nowrap;
+  right: 0.5rem;
+  left: auto;
+}
+
+.header-content {
+    position: relative;
+    text-align: left;
+    padding-top: 120px;
+    padding-left: 20px;
+    padding-bottom: 200px;f
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+main {
+    flex: 1 0 auto;
+  }
+
+.marketing-head {
+    font-size: 24px;
+}
