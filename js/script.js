@@ -1,3 +1,7 @@
+$(document).ready(function() {
+  $('select').material_select();
+});
+
 const submit = document.getElementById('submit-search');
 const form = document.getElementById('search-form');
 const searchResults1 = document.getElementById('search-results1');
@@ -13,6 +17,16 @@ const searchResults2 = document.getElementById('search-results2');
 //     console.log(jsonresult);
 //   })
 // }
+
+function filterAlcContent(value, results){
+  if (value === 'noBooze'){
+    return results.filter(element => element.strAlcoholic === "Non alcoholic");
+  } else if (value === 'showBooze'){
+    return results.filter(element => element.strAlcoholic === "Alcoholic");
+  } else {
+    return results;
+  }
+}
 
 function getRemoteJson(url) {
   return fetch(url)
@@ -82,11 +96,16 @@ function removeFalse(ingArray){
 form.addEventListener("submit", function(event){
   event.preventDefault();
 	let searchInput = document.getElementById('cocktail-name').value;
+  let alcoholicFilter = document.getElementById('alcoholic-filter').value;
 	let url = `http://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchInput}`;
   // let url = 'http://www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita';
   // console.log(getRemoteJson(url));
   getRemoteJson(url).then(function(res) {
     let drinkResults = res.drinks;
+    // if (alcoholicFilter === 'noBooze'){
+    //   drinkResults = drinkResults.filter(element => element.strAlcoholic === "Non alcoholic");
+    // }
+    drinkResults = filterAlcContent(alcoholicFilter, drinkResults);
     drinkResults.forEach(function(ele, i) {
       let div = document.createElement('div');
       let picture = ele.strDrinkThumb;

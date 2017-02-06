@@ -43,14 +43,41 @@
         <br>
         <form class="col s12" id="search-form">
             <div class="row">
+                <p>
+  <input name="group1" type="radio" id="test1"/>
+  <label for="test1">Show Alcoholic Drinks Only</label>
+</p>
+<p>
+  <input name="group1" type="radio" id="test2"/>
+  <label for="test2">Show Virgin Drinks Only</label>
+</p>
+<p>
+  <input class="with-gap" name="group1" type="radio" id="test3"/>
+  <label for="test3">Show Both</label>
+</p>
+<p>
+            </div>
+            <div class="row">
                 <div class="input-field">
                     <input placeholder="Enter the name of your desired cocktail" id="cocktail-name" type="text" class="validate">
                     <label for="first_name">Cocktail Name</label>
                 </div>
+            </div>
+            <div class="row">
+								<div class="input-field">
+									<select id="alcoholic-filter">
+										<option value="" disabled selected>Select Alcohol Options</option>
+										<option value="showBooze">Show Alcoholic Drinks Only</option>
+										<option value="noBooze">Show Virgin Drinks Only</option>
+										<option value="showAll">Show Both</option>
+									</select>
+									<label for="alcohic-filter">Choose to filter Alcoholic/Virgin</label>
+								</div>
+            </div>
                 <div class="row center">
                   <input type="submit" class="btn-large waves-effect waves-light grey" id="submit-search" value="I'm Thirsty">
                 </div>
-            </div>
+            <!-- </div> -->
         </form>
     </div>
     <div class="row">
