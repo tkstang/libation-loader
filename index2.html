@@ -48,6 +48,13 @@
                     <label for="cocktail-name">Cocktail Name</label>
                 </div>
             </div>
+
+            <!-- Hidden Search Field Divs -->
+<!-- <div class="input-field" id="search-ingredient" style="visibility: hidden">
+    <input placeholder="Enter an Ingredient to Search" id="ingredient" type="text" class="validate">
+    <label for="ingredient">Ingredient</label>
+</div> -->
+
             <div class="row">
                 <div class="input-field">
                     <select id="alcoholic-filter">
@@ -83,6 +90,17 @@
 </div>
 </div>
 
+<div class='card' id='hidden' style="display: none">
+    <div class='card-image waves-effect waves-block waves-light'><img class='activator responsive-img' height='300' width='200px'></div>
+    <div class='card-content'><span class='card-title activator grey-text text-darken-4'>Title<i class='material-icons right'>more_vert</i></span>
+    </div>
+    <div class='card-reveal'><span class='card-title grey-text text-darken-4'>Title<i class='material-icons right'>close</i></span>
+        <p id='recipe'>Recipe</p>
+        <p id='instructions'>Instructions</p>
+    </div>
+</div>
+
+</div>
     </main>
     <footer class="page-footer #212121 grey darken-4">
         <!-- <div class="container"> -->
