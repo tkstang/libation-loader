@@ -5,18 +5,21 @@ $(document).ready(function() {
 
 const submit = document.getElementById('submit-search');
 const form = document.getElementById('search-form');
-const searchName = document.getElementById('search-name');
-const searchIng = document.getElementById('search-ingredient');
-const searchCat = document.getElementById('search-category');
-const searchRandom = document.getElementById('search-random');
+const linkName = document.getElementById('search-name');
+const linkIng = document.getElementById('search-ingredient');
+const linkCat = document.getElementById('search-category');
+const linkRandom = document.getElementById('search-random');
 const searchResults1 = document.getElementById('search-results1');
 const searchResults2 = document.getElementById('search-results2');
 const searchRow = document.getElementById('search-row');
 const hiddenCard = document.getElementById('hidden');
-const catSelect = document.getElementById('cat-select');
+const catInput = document.getElementById('cat-select');
 const catLabel = document.getElementById('cat-label');
-const ingredientInput = document.getElementById('ingredient');
-const cocktailInput = document.getElementById('cocktail-name');
+const ingredientInput = document.getElementById('ingredient-input');
+const cocktailInput = document.getElementById('cocktail-input');
+const ingredientSearch = document.getElementById('ingredient');
+const cocktailSearch = document.getElementById('cocktail-name');
+const activeSelected = document.getElementsByClassName('cocktail-name');
 let searchType = 'cocktail name';
 // const ingredientSearch = document.getElementById('search-ingredient');
 // const ingredientRow = document.getElementById('ingredient-row');
@@ -30,6 +33,19 @@ function filterAlcContent(value, results){
   } else {
     return results;
   }
+}
+
+//Alcoholic/Virgin filter For individual drinks that Require additional API Call
+function deepFilterAlc(value, result){
+  console.log(result.strAlcoholic);
+  if ((result.strAlcoholic === "Non alcoholic") && (value === 'noBooze')){
+    return true;
+  } else if ((result.strAlcoholic === "Alcoholic") && (value === 'showBooze')){
+      return true;
+  } else if (value === 'showAll'){
+      return true;
+  }
+  return false;
 }
 
 function buildCard(picture, title, recipe, instructions){
@@ -98,9 +114,24 @@ function distributeCards(index, div){
   }
 }
 
+function getSearchInput(searchType){
+  let input = form.children[0].children[0].children[0];
+  let searchValue = '';
+  if ((searchType === 'cocktail name') || (searchType === 'ingredient') ){
+    searchValue = input.value;
+  } else if (searchType === 'category'){
+  let catSelect = document.getElementById('cat-select');
+  searchValue = catSelect.options[catSelect.selectedIndex].text;
+  } else if (searchType === 'random'){
+    searchValue = randomInput.value
+  }
+  return searchValue;
+}
+
 // Sets default search type to 'cocktail name';
 // Determines the correct URL to use in getRemoteJson function
 function determineURL(searchType, searchInput){
+  // console.log(searchInput);
   if(searchType === 'ingredient'){
     return `http://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${searchInput}`;
   } else if(searchType === 'cocktail name'){
@@ -127,56 +158,52 @@ function removeSearchFields(){
   }
 }
 
+// Clones hidden search field and appends
 function appendSearchField(searchField){
   let clone = searchField.cloneNode(true);
   clone.removeAttribute("style");
   searchRow.appendChild(clone);
 }
 
-searchIng.addEventListener("click", function(event){
+linkIng.addEventListener("click", function(event){
   event.preventDefault();
   removeSearchFields();
-  let ingredientClone = ingredientInput.cloneNode(true);
-  ingredientClone.removeAttribute("style");
-  searchRow.appendChild(ingredientClone);
+  appendSearchField(ingredientSearch);
 	searchType = 'ingredient';
 });
 
-//Working on removing HTML string
-searchName.addEventListener("click", function(event){
+linkName.addEventListener("click", function(event){
   event.preventDefault();
   removeSearchFields();
-  let cocktailClone = cocktailInput.cloneNode(true);
-  cocktailClone.removeAttribute("style");
-  searchRow.appendChild(cocktailClone);
+  appendSearchField(cocktailSearch);
   searchType = 'cocktail name';
 })
 
-searchCat.addEventListener("click", function(event){
+linkCat.addEventListener("click", function(event){
   event.preventDefault();
   removeSearchFields();
   let div = document.createElement('div');
   div.className = 'input-field';
   div.id = 'category-select';
-  let divClone = catSelect.cloneNode(true);
+  let divClone = catInput.cloneNode(true);
   div.appendChild(divClone);
   div.appendChild(catLabel);
   searchRow.appendChild(div);
-  $(document).ready(function() {
-    $('select').material_select();
-  });
   searchType = 'category';
+  $('select').material_select();
 })
 
 form.addEventListener("submit", function(event){
   event.preventDefault();
   removeResults();
   let alcoholicFilter = document.getElementById('alcoholic-filter').value;
-  let searchInput = form.children[0].children[0].children[0].value;
-  let searchURL = determineURL(searchType, searchInput);
+  let searchURL = determineURL(searchType, getSearchInput(searchType));
+  console.log(searchURL);
   getRemoteJson(searchURL).then(function(res) {
     let drinkResults = res.drinks;
-    drinkResults = filterAlcContent(alcoholicFilter, drinkResults);
+    if (searchType === 'cocktail-name'){
+      drinkResults = filterAlcContent(alcoholicFilter, drinkResults);
+    }
     drinkResults.forEach(function(ele, i) {
       let id = ele.idDrink;
       let idURL = `http://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
@@ -196,10 +223,12 @@ form.addEventListener("submit", function(event){
         distributeCards(i, div);
       } else {
         getRemoteJson(idURL).then(function(res){
-          recipe = removeFalse(ingsToArray(res.drinks[0], 'strIngredient', 'strMeasure'));
-          instructions = (res.drinks[0].strInstructions);
-          div.append(buildCard(picture, title, recipe, instructions));
-          distributeCards(i, div);
+          if (deepFilterAlc(alcoholicFilter, res.drinks[0])){
+            recipe = removeFalse(ingsToArray(res.drinks[0], 'strIngredient', 'strMeasure'));
+            instructions = (res.drinks[0].strInstructions);
+            div.append(buildCard(picture, title, recipe, instructions));
+            distributeCards(i, div);
+          }
         });
       }
     })
