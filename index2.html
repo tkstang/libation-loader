@@ -2,27 +2,25 @@
 <html>
 
 <head>
-	<meta charset="utf-8">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.css">
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<link rel="stylesheet" href="css/style.css">
-	<title>Libation Loader</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Libation Loader</title>
 </head>
+
 <body>
     <nav>
         <ul id="dropdown1" class="dropdown-content #212121 grey darken-4">
-          <li><a href="#!" class="orange-text text-lighten-1" id="search-name">Cocktail Name</a></li>
-          <li><a href="#!" class="orange-text text-lighten-1" id="search-ingredient">Ingredients</a></li>
-          <li><a href="#!" class="orange-text text-lighten-1" id="search-category">Category</a></li>
-          <!-- <li><a href="#!" class="orange-text text-lighten-1" id="search-glass">Glass Type</a></li> -->
-          <li><a href="#!" class="orange-text text-lighten-1" id="search-random">Feeling Adventurous</a></li>
-          <!-- <li class="divider"></li>
-          <li><a href="#!">three</a></li> -->
+            <li><a href="#!" class="orange-text text-lighten-1" id="search-name">Cocktail Name</a></li>
+            <li><a href="#!" class="orange-text text-lighten-1" id="search-ingredient">Ingredients</a></li>
+            <li><a href="#!" class="orange-text text-lighten-1" id="search-category">Category</a></li>
+            <li><a href="#!" class="orange-text text-lighten-1" id="search-random">Feeling Adventurous</a></li>
         </ul>
         <div class="nav-wrapper #212121 grey darken-4">
             <ul class="right">
-              <!-- Dropdown Trigger -->
-              <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Search Options<i class="material-icons right">arrow_drop_down</i></a></li>
+                <!-- Dropdown Trigger -->
+                <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Search Options<i class="material-icons right">arrow_drop_down</i></a></li>
             </ul>
             <!-- <ul id="nav-mobile" class="left hide-on-med-and-down">
                 <li><a href="#">I'm Thirsty</a></li>
@@ -38,26 +36,27 @@
         </div>
     </div>
     <main>
-<div class="container">
-    <div class="row">
-        <br>
-        <form class="col s12" id="search-form">
-            <div class="row" id="search-row">
-                <div class="input-field">
-                    <input placeholder="Enter the name of your desired cocktail" id="cocktail-name" type="text" class="validate">
-                    <label for="cocktail-name">Cocktail Name</label>
-                </div>
-                <!-- Hidden Category Search Input -->
-                <div class="input-field" id="category-select" style="display: none">
-                    <select id="cat-select">
+        <div class="container">
+            <div class="row">
+                <br>
+                <form class="col s12" id="search-form">
+                    <div class="row" id="search-row">
+                        <div class="input-field">
+                            <input placeholder="Enter the name of your desired cocktail" id="cocktail-placeholder" type="text" class="validate">
+                            <label for="cocktail-name">Cocktail Name</label>
+                        </div>
+
+                        <!-- Hidden Category Search Input -->
+                        <div class="input-field" id="category-select" style="display: none">
+                            <select id="cat-select">
                         <option value="" disabled selected>Select A Category</option>
                         <option value="vodka">Vodka</option>
                         <option value="gin">Gin</option>
                         <option value="whiskey">Whiskey</option>
                     </select>
-                    <label for="cat-select" id="cat-label">Choose to Search By Specific Categories</label>
-                </div>
-                <!--
+                            <label for="cat-select" id="cat-label">Choose to Search By Specific Categories</label>
+                        </div>
+                        <!-- Temporary while building categories
                 {
                   "strCategory": "Ordinary Drink"
                 },
@@ -94,25 +93,29 @@
 
 
                 <!-- End Hidden Input -->
-            </div>
-            <!-- <div class='row' id="ingredient-row" style="display: none"> -->
-                <!-- <div class="input-field" id="search-ingredient" style="display: none">
-                    <input placeholder="Enter an Ingredient to Search" id="ingredient" type="text" class="validate">
-                    <label for="ingredient">Ingredient</label>
-                </div> -->
-            <!-- </div> -->
+                    </div>
+                    <!-- <div class='row' id="ingredient-row" style="display: none"> -->
+                    <div class="input-field" id="cocktail-name" style="display: none">
+                        <input placeholder="Enter the name of your desired cocktail" id="cocktail-input" type="text" class="validate">
+                        <label for="cocktail-name">Cocktail Name</label>
+                    </div>
+                    <div class="input-field" id="ingredient" style="display: none">
+                        <input placeholder="Enter an Ingredient to Search" id="ingredient-input" type="text" class="validate">
+                        <label for="ingredient">Ingredient</label>
+                    </div>
+                    <!-- </div> -->
 
-            <div class="row">
-                <div class="input-field">
-                    <select id="alcoholic-filter">
+                    <div class="row">
+                        <div class="input-field">
+                            <select id="alcoholic-filter">
                         <option value="" disabled selected>Select Alcohol Options</option>
                         <option value="showAll">Show Both</option>
                         <option value="showBooze">Show Alcoholic Drinks Only</option>
                         <option value="noBooze">Show Virgin Drinks Only</option>
                     </select>
-                    <label for="alcoholic-filter">Choose to Filter Alcoholic/Virgin or Show Both</label>
-                </div>
-                <!-- Filter by Liquor
+                            <label for="alcoholic-filter">Choose to Filter Alcoholic/Virgin or Show Both</label>
+                        </div>
+                        <!-- Filter by Liquor
                 <div class="input-field" id="category-select" style="display: none">
                     <select name="foo" id="liquor-filter">
                         <option value="" disabled selected>Select A Category</option>
@@ -123,50 +126,50 @@
                     <label for="alcohic-filter">Choose to Search By Specific Categories</label>
                 </div>
                 -->
-            </div>
-            <div class="row">
-            <!-- </div> -->
-                <div class="row center">
-                  <input type="submit" class="btn-large waves-effect waves-light grey" id="submit-search" value="I'm Thirsty">
+                    </div>
+                    <div class="row">
+                        <!-- </div> -->
+                        <div class="row center">
+                            <input type="submit" class="btn-large waves-effect waves-light grey" id="submit-search" value="I'm Thirsty">
+                        </div>
+                        <!-- </div> -->
+                </form>
                 </div>
-            <!-- </div> -->
-        </form>
-    </div>
-    <div class="row">
-    <div class="col s6" id ="search-results1">
-    </div>
-    <div class="col s6" id="search-results2">
-</div>
-</div>
+                <div class="row">
+                    <div class="col s6" id="search-results1">
+                    </div>
+                    <div class="col s6" id="search-results2">
+                    </div>
+                </div>
 
-<div class='card' id='hidden' style="display: none">
-    <div class='card-image waves-effect waves-block waves-light'><img class='activator responsive-img' height='300' width='200px'></div>
-    <div class='card-content'><span class='card-title activator grey-text text-darken-4'>Title<i class='material-icons right'>more_vert</i></span>
-    </div>
-    <div class='card-reveal'><span class='card-title grey-text text-darken-4'>Title<i class='material-icons right'>close</i></span>
-        <p id='recipe'>Recipe</p>
-        <p id='instructions'>Instructions</p>
-    </div>
-</div>
+                <div class='card' id='hidden' style="display: none">
+                    <div class='card-image waves-effect waves-block waves-light'><img class='activator responsive-img' height='300' width='200px'></div>
+                    <div class='card-content'><span class='card-title activator grey-text text-darken-4'>Title<i class='material-icons right'>more_vert</i></span>
+                    </div>
+                    <div class='card-reveal'><span class='card-title grey-text text-darken-4'>Title<i class='material-icons right'>close</i></span>
+                        <p id='recipe'>Recipe</p>
+                        <p id='instructions'>Instructions</p>
+                    </div>
+                </div>
 
-</div>
+            </div>
     </main>
     <footer class="page-footer #212121 grey darken-4">
         <!-- <div class="container"> -->
-            <div class="row">
-                <div class="col s6">
-                    <ul>
-                        <li><a class="grey-text text-lighten-3 left" href="index.html">Home</a></li>
-                    </ul>
-                </div>
-                <div class="col s6">
-                    <h5 class="white-text right">Libation Loader</h5><br><br>
-                </div>
+        <div class="row">
+            <div class="col s6">
+                <ul>
+                    <li><a class="grey-text text-lighten-3 left" href="index.html">Home</a></li>
+                </ul>
             </div>
+            <div class="col s6">
+                <h5 class="white-text right">Libation Loader</h5><br><br>
+            </div>
+        </div>
         <!-- </div> -->
         <div class="footer-copyright #000000 black">
             <!-- <div class="container"> -->
-                © 2017 Thomas Stang
+            © 2017 Thomas Stang
             <!-- </div> -->
         </div>
     </footer>

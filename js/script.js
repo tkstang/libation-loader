@@ -15,6 +15,9 @@ const searchRow = document.getElementById('search-row');
 const hiddenCard = document.getElementById('hidden');
 const catSelect = document.getElementById('cat-select');
 const catLabel = document.getElementById('cat-label');
+const ingredientInput = document.getElementById('ingredient');
+const cocktailInput = document.getElementById('cocktail-name');
+let searchType = 'cocktail name';
 // const ingredientSearch = document.getElementById('search-ingredient');
 // const ingredientRow = document.getElementById('ingredient-row');
 // const firstFormElement = form.children[0].children[0];
@@ -96,13 +99,14 @@ function distributeCards(index, div){
 }
 
 // Sets default search type to 'cocktail name';
-let searchType = 'cocktail name';
 // Determines the correct URL to use in getRemoteJson function
 function determineURL(searchType, searchInput){
   if(searchType === 'ingredient'){
     return `http://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${searchInput}`;
   } else if(searchType === 'cocktail name'){
     return `http://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchInput}`;
+  } else if(searchType === 'category'){
+    return `http://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${searchInput}`;
   }
 }
 
@@ -116,29 +120,41 @@ function removeResults(){
   }
 }
 
+// Removes search fields from page
+function removeSearchFields(){
+  while (searchRow.firstChild) {
+    searchRow.removeChild(searchRow.firstChild);
+  }
+}
+
+function appendSearchField(searchField){
+  let clone = searchField.cloneNode(true);
+  clone.removeAttribute("style");
+  searchRow.appendChild(clone);
+}
+
 searchIng.addEventListener("click", function(event){
   event.preventDefault();
-  form.children[0].removeChild(form.children[0].children[0]);
-  let div = document.createElement('div');
-  div.className = 'input-field';
-  div.innerHTML = `<input placeholder="Enter an Ingredient to Search" id="ingredient" type="text" class="validate"><label for="ingredient" class="active">Ingredient</label>`;
-  searchRow.appendChild(div);
-  searchType = 'ingredient';
-})
+  removeSearchFields();
+  let ingredientClone = ingredientInput.cloneNode(true);
+  ingredientClone.removeAttribute("style");
+  searchRow.appendChild(ingredientClone);
+	searchType = 'ingredient';
+});
 
+//Working on removing HTML string
 searchName.addEventListener("click", function(event){
   event.preventDefault();
-  form.children[0].removeChild(form.children[0].children[0]);
-  let div = document.createElement('div');
-  div.className = 'input-field';
-  div.innerHTML = `<input placeholder="Enter the name of your desired cocktail" id="cocktail-name" type="text" class="validate"><label for="cocktail-name" class="active">Cocktail Name</label>`;
-  searchRow.appendChild(div);
+  removeSearchFields();
+  let cocktailClone = cocktailInput.cloneNode(true);
+  cocktailClone.removeAttribute("style");
+  searchRow.appendChild(cocktailClone);
   searchType = 'cocktail name';
 })
 
 searchCat.addEventListener("click", function(event){
   event.preventDefault();
-  form.children[0].removeChild(form.children[0].children[0]);
+  removeSearchFields();
   let div = document.createElement('div');
   div.className = 'input-field';
   div.id = 'category-select';
