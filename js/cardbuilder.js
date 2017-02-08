@@ -40,9 +40,26 @@ function buildCard(picture, title, recipe, instructions){
 
 let ingSearchClone = ingredientSearch.cloneNode(true);
 console.log(ingSearchClone);
-ingSearchClone.setAttribute("style", "display: unset");
+ingSearchClone.removeAttribute("style");
 div.appendChild(ingSearchClone);
 console.log(div);
+
+searchIng.addEventListener("click", function(event){
+  event.preventDefault();
+  form.children[0].removeChild(form.children[0].children[0]);
+  let ingSearchClone = ingredientSearch.cloneNode(true);
+  console.log(ingSearchClone);
+  ingSearchClone.removeAttribute("style");
+  searchRow.appendChild(ingSearchClone);
+  $(document).ready(function() {
+    $('select').material_select();
+  });
+  // let div = document.createElement('div');
+  // div.className = 'input-field';
+  // div.innerHTML = `<input placeholder="Enter an Ingredient to Search" id="ingredient" type="text" class="validate"><label for="ingredient" class="active">Ingredient</label>`;
+  // searchRow.appendChild(div);
+  searchType = 'ingredient';
+})
 
 
       let cardString = `<div class='card'><div class='card-image waves-effect waves-block waves-light'><img class='activator responsive-img' src='${picture}' height='300' width='200px'></div><div class='card-content'><span class='card-title activator grey-text text-darken-4'>${title}<i class='material-icons right'>more_vert</i></span><p><a href='#'>This is a link</a></p></div><div class='card-reveal'><span class='card-title grey-text text-darken-4'>${title}<i class='material-icons right'>close</i></span><p id='recipe'>${recipe}</p><br><p id='instructions'>${instructions}</p></div></div>`;

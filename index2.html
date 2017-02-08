@@ -42,18 +42,65 @@
     <div class="row">
         <br>
         <form class="col s12" id="search-form">
-            <div class="row">
+            <div class="row" id="search-row">
                 <div class="input-field">
                     <input placeholder="Enter the name of your desired cocktail" id="cocktail-name" type="text" class="validate">
                     <label for="cocktail-name">Cocktail Name</label>
                 </div>
-            </div>
+                <!-- Hidden Category Search Input -->
+                <div class="input-field" id="category-select" style="display: none">
+                    <select id="cat-select">
+                        <option value="" disabled selected>Select A Category</option>
+                        <option value="vodka">Vodka</option>
+                        <option value="gin">Gin</option>
+                        <option value="whiskey">Whiskey</option>
+                    </select>
+                    <label for="cat-select" id="cat-label">Choose to Search By Specific Categories</label>
+                </div>
+                <!--
+                {
+                  "strCategory": "Ordinary Drink"
+                },
+                {
+                  "strCategory": "Cocktail"
+                },
+                {
+                  "strCategory": "Soft Drink / Soda"
+                },
+                {
+                  "strCategory": "Milk / Float / Shake"
+                },
+                {
+                  "strCategory": "Other/Unknown"
+                },
+                {
+                  "strCategory": "Cocoa"
+                },
+                {
+                  "strCategory": "Shot"
+                },
+                {
+                  "strCategory": "Coffee / Tea"
+                },
+                {
+                  "strCategory": "Homemade Liqueur"
+                },
+                {
+                  "strCategory": "Punch / Party Drink"
+                },
+                {
+                  "strCategory": "Beer"
+                }
 
-            <!-- Hidden Search Field Divs -->
-<!-- <div class="input-field" id="search-ingredient" style="visibility: hidden">
-    <input placeholder="Enter an Ingredient to Search" id="ingredient" type="text" class="validate">
-    <label for="ingredient">Ingredient</label>
-</div> -->
+
+                <!-- End Hidden Input -->
+            </div>
+            <!-- <div class='row' id="ingredient-row" style="display: none"> -->
+                <!-- <div class="input-field" id="search-ingredient" style="display: none">
+                    <input placeholder="Enter an Ingredient to Search" id="ingredient" type="text" class="validate">
+                    <label for="ingredient">Ingredient</label>
+                </div> -->
+            <!-- </div> -->
 
             <div class="row">
                 <div class="input-field">
@@ -65,18 +112,20 @@
                     </select>
                     <label for="alcoholic-filter">Choose to Filter Alcoholic/Virgin or Show Both</label>
                 </div>
-            </div>
-            <!-- <div class="row">
-                <div class="input-field">
-                    <select id="liquor-filter">
-                        <option value="" disabled selected>Select A Liquor Base</option>
+                <!-- Filter by Liquor
+                <div class="input-field" id="category-select" style="display: none">
+                    <select name="foo" id="liquor-filter">
+                        <option value="" disabled selected>Select A Category</option>
                         <option value="vodka">Vodka</option>
                         <option value="gin">Gin</option>
                         <option value="whiskey">Whiskey</option>
                     </select>
-                    <label for="alcohic-filter">Choose to Filter Results Which Include a Specific Liquor</label>
+                    <label for="alcohic-filter">Choose to Search By Specific Categories</label>
                 </div>
-            </div> -->
+                -->
+            </div>
+            <div class="row">
+            <!-- </div> -->
                 <div class="row center">
                   <input type="submit" class="btn-large waves-effect waves-light grey" id="submit-search" value="I'm Thirsty">
                 </div>

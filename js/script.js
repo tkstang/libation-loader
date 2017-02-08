@@ -11,9 +11,13 @@ const searchCat = document.getElementById('search-category');
 const searchRandom = document.getElementById('search-random');
 const searchResults1 = document.getElementById('search-results1');
 const searchResults2 = document.getElementById('search-results2');
+const searchRow = document.getElementById('search-row');
 const hiddenCard = document.getElementById('hidden');
-const ingredientSearch = document.getElementById('search-ingredient');
-const firstElement = form.children[0];
+const catSelect = document.getElementById('cat-select');
+const catLabel = document.getElementById('cat-label');
+// const ingredientSearch = document.getElementById('search-ingredient');
+// const ingredientRow = document.getElementById('ingredient-row');
+// const firstFormElement = form.children[0].children[0];
 
 function filterAlcContent(value, results){
   if (value === 'noBooze'){
@@ -90,6 +94,7 @@ function distributeCards(index, div){
     searchResults2.appendChild(div);
   }
 }
+
 // Sets default search type to 'cocktail name';
 let searchType = 'cocktail name';
 // Determines the correct URL to use in getRemoteJson function
@@ -113,13 +118,38 @@ function removeResults(){
 
 searchIng.addEventListener("click", function(event){
   event.preventDefault();
-  form.removeChild(firstElement);
+  form.children[0].removeChild(form.children[0].children[0]);
   let div = document.createElement('div');
-  div.className = 'row';
-  let divCode = `<div class="input-field"><input placeholder="Enter an Ingredient to Search" id="ingredient" type="text" class="validate"><label for="ingredient">Ingredient</label></div>`;
-  div.innerHTML = divCode;
-  form.insertBefore(div, form.firstChild);
+  div.className = 'input-field';
+  div.innerHTML = `<input placeholder="Enter an Ingredient to Search" id="ingredient" type="text" class="validate"><label for="ingredient" class="active">Ingredient</label>`;
+  searchRow.appendChild(div);
   searchType = 'ingredient';
+})
+
+searchName.addEventListener("click", function(event){
+  event.preventDefault();
+  form.children[0].removeChild(form.children[0].children[0]);
+  let div = document.createElement('div');
+  div.className = 'input-field';
+  div.innerHTML = `<input placeholder="Enter the name of your desired cocktail" id="cocktail-name" type="text" class="validate"><label for="cocktail-name" class="active">Cocktail Name</label>`;
+  searchRow.appendChild(div);
+  searchType = 'cocktail name';
+})
+
+searchCat.addEventListener("click", function(event){
+  event.preventDefault();
+  form.children[0].removeChild(form.children[0].children[0]);
+  let div = document.createElement('div');
+  div.className = 'input-field';
+  div.id = 'category-select';
+  let divClone = catSelect.cloneNode(true);
+  div.appendChild(divClone);
+  div.appendChild(catLabel);
+  searchRow.appendChild(div);
+  $(document).ready(function() {
+    $('select').material_select();
+  });
+  searchType = 'category';
 })
 
 form.addEventListener("submit", function(event){
@@ -128,8 +158,6 @@ form.addEventListener("submit", function(event){
   let alcoholicFilter = document.getElementById('alcoholic-filter').value;
   let searchInput = form.children[0].children[0].children[0].value;
   let searchURL = determineURL(searchType, searchInput);
-  // let url = `http://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchInput}`;
-
   getRemoteJson(searchURL).then(function(res) {
     let drinkResults = res.drinks;
     drinkResults = filterAlcContent(alcoholicFilter, drinkResults);
