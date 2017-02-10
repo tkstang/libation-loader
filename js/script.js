@@ -172,11 +172,11 @@ function getSearchInput(searchType){
 // Determines the correct URL to use in getRemoteJson function
 function determineURL(searchType, searchInput){
   if(searchType === 'ingredient'){
-    return `http://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${searchInput}`;
+    return `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${searchInput}`;
   } else if(searchType === 'cocktail name'){
-    return `http://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchInput}`;
+    return `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchInput}`;
   } else if(searchType === 'category'){
-    return `http://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${searchInput}`;
+    return `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${searchInput}`;
   }
 }
 
@@ -245,7 +245,7 @@ linkCat.addEventListener("click", function(event){
 linkRandom.addEventListener("click", function(event){
   event.preventDefault();
   removeResults();
-  getRemoteJson('http://www.thecocktaildb.com/api/json/v1/1/random.php')
+  getRemoteJson('https://www.thecocktaildb.com/api/json/v1/1/random.php')
   .then(function(result) {
     let randomDrink = result.drinks[0];
     let div = document.createElement('div');
@@ -282,7 +282,7 @@ form.addEventListener("submit", function(event){
     }
     drinkResults.forEach(function(ele, i) {
       let id = ele.idDrink;
-      let idURL = `http://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
+      let idURL = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
       let div = document.createElement('div');
       let picture = ele.strDrinkThumb;
       let title = ele.strDrink;
