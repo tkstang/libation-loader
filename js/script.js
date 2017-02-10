@@ -4,7 +4,12 @@ $(document).ready(function() {
 });
 
 const submit = document.getElementById('submit-search');
+const content = document.getElementById('content');
 const form = document.getElementById('search-form');
+const landing = document.getElementById('landing');
+const loadLanding = document.getElementById('load-landing');
+const loadFavs = document.getElementById('load-favs');
+const loadSearch = document.getElementById('load-search');
 const linkName = document.getElementById('search-name');
 const linkIng = document.getElementById('search-ingredient');
 const linkCat = document.getElementById('search-category');
@@ -15,6 +20,7 @@ const searchRow = document.getElementById('search-row');
 const hiddenCard = document.getElementById('hidden');
 const catInput = document.getElementById('cat-select');
 const catLabel = document.getElementById('cat-label');
+const categorySearch = document.getElementById('category-select');
 const ingredientInput = document.getElementById('ingredient-input');
 const cocktailInput = document.getElementById('cocktail-input');
 const ingredientSearch = document.getElementById('ingredient');
@@ -22,6 +28,13 @@ const cocktailSearch = document.getElementById('cocktail-name');
 const activeSelected = document.getElementsByClassName('cocktail-name');
 const $toastContent = $('<span>Sorry but your search did not return any results. <br>There are some ways to try to improve your search results: <br>If you are searching by ingredient try adjusting your ingredient. <br>(For Example: If you entered "soda," try "soda water" or "club soda")<span>');
 let searchType = 'cocktail name';
+
+let myHeaders = new Headers();
+
+let myInit = { method: 'GET',
+               headers: myHeaders,
+               mode: 'no-cors',
+               cache: 'default' };
 
 function filterAlcContent(value, results){
   if (value === 'noBooze'){
@@ -197,6 +210,13 @@ function removeSearchFields(){
   }
 }
 
+// Removes content from page
+function removeContent(){
+  while (content.firstChild) {
+    content.removeChild(content.firstChild);
+  }
+}
+
 //Function to determine if search returns no results and notify user
 function noResults(drinkResults, drinksAfterFilter){
   debugger;
@@ -207,12 +227,12 @@ function noResults(drinkResults, drinksAfterFilter){
   }
 }
 
-let myHeaders = new Headers();
 
-let myInit = { method: 'GET',
-               headers: myHeaders,
-               mode: 'no-cors',
-               cache: 'default' };
+function append(append, appendTo){
+  let clone = append.cloneNode(true);
+  clone.removeAttribute("style");
+  appendTo.appendChild(clone);
+}
 
 // Clones hidden search field and appends
 function appendSearchField(searchField){
@@ -220,6 +240,12 @@ function appendSearchField(searchField){
   clone.removeAttribute("style");
   searchRow.appendChild(clone);
 }
+
+loadLanding.addEventListener("click", function(event){
+  event.preventDefault();
+  removeContent();
+  append(landing, content);
+});
 
 linkIng.addEventListener("click", function(event){
   event.preventDefault();
