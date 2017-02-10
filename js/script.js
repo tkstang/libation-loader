@@ -93,7 +93,7 @@ function buildCard(picture, title, recipe, instructions){
 }
 
 //Fetches from API and returns object
-function getRemoteJson(url) {
+function getRemoteJson(url, settings) {
   return fetch(url)
   .then(function(res) {
     return res.json();
@@ -207,6 +207,13 @@ function noResults(drinkResults, drinksAfterFilter){
   }
 }
 
+let myHeaders = new Headers();
+
+let myInit = { method: 'GET',
+               headers: myHeaders,
+               mode: 'no-cors',
+               cache: 'default' };
+
 // Clones hidden search field and appends
 function appendSearchField(searchField){
   let clone = searchField.cloneNode(true);
@@ -245,7 +252,7 @@ linkCat.addEventListener("click", function(event){
 linkRandom.addEventListener("click", function(event){
   event.preventDefault();
   removeResults();
-  getRemoteJson('https://www.thecocktaildb.com/api/json/v1/1/random.php')
+  getRemoteJson('https://www.thecocktaildb.com/api/json/v1/1/random.php', myInit)
   .then(function(result) {
     let randomDrink = result.drinks[0];
     let div = document.createElement('div');
@@ -269,7 +276,7 @@ form.addEventListener("submit", function(event){
   let liquorFilter = liquorSelect.options[liquorSelect.selectedIndex].text;
   let searchURL = determineURL(searchType, getSearchInput(searchType));
   console.log(searchURL);
-  getRemoteJson(searchURL).then(function(res) {
+  getRemoteJson(searchURL, myInit).then(function(res) {
     let drinkResults = res.drinks;
     let drinksAfterFilter = false;
     let drinkCount = drinkResults.length
@@ -297,7 +304,7 @@ form.addEventListener("submit", function(event){
         distributeCards(i, div);
       } else {
         count = drinkResults.length;
-        getRemoteJson(idURL).then(function(res){
+        getRemoteJson(idURL, myInit).then(function(res){
           count--;
           if (count === 0){
             noResults(drinkResults, drinksAfterFilter);
