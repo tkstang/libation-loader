@@ -3,13 +3,20 @@
     background-repeat: no-repeat;
     background-size: cover;
     height: auto;
-        /*height: 25rem;*/
     color: "white";
 }
 
 .header-text {
     color: #FFFFFF;
     /*font-size: 48px;*/
+}
+
+#dropdown1 li:hover, #dropdown1 li.active, #dropdown1 li.selected {
+  background-color: #444444;
+}
+
+#footer-copyright {
+  padding-left: 10px;
 }
 
 h2 {

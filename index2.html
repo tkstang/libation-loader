@@ -13,9 +13,14 @@
     <nav>
         <ul id="dropdown1" class="dropdown-content #212121 grey darken-4">
             <li><a href="#!" class="orange-text text-lighten-1" id="search-name">Cocktail Name</a></li>
+			<li class="divider"></li>
             <li><a href="#!" class="orange-text text-lighten-1" id="search-ingredient">Ingredients</a></li>
+			<li class="divider"></li>
             <li><a href="#!" class="orange-text text-lighten-1" id="search-category">Category</a></li>
-            <li><a href="#!" class="orange-text text-lighten-1" id="search-random">Feeling Adventurous</a></li>
+			<li class="divider"></li>
+            <li><a href="#!" class="orange-text text-lighten-1" id="search-random">Surprise Me</a></li>
+            <li class="divider"></li>
+
         </ul>
         <div class="nav-wrapper #212121 grey darken-4">
             <ul class="right">
@@ -90,6 +95,7 @@
                 <div class="input-field">
                     <select id="liquor-filter">
                         <option value="" disabled selected>Select A Liquor</option>
+                        <option value="showAll">Show All</option>
                         <option value="vodka">Vodka</option>
                         <option value="gin">Gin</option>
                         <option value="whiskey">Whiskey</option>
@@ -144,7 +150,7 @@
             </div>
         </div>
         <!-- </div> -->
-        <div class="footer-copyright #000000 black">
+        <div class="footer-copyright #000000 black" id="footer-copyright">
             <!-- <div class="container"> -->
             © 2017 Thomas Stang
             <!-- </div> -->

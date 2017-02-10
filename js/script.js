@@ -20,6 +20,7 @@ const cocktailInput = document.getElementById('cocktail-input');
 const ingredientSearch = document.getElementById('ingredient');
 const cocktailSearch = document.getElementById('cocktail-name');
 const activeSelected = document.getElementsByClassName('cocktail-name');
+const $toastContent = $('<span>Sorry but your search did not return any results. <br>There are some ways to try to improve your search results: <br>If you are searching by ingredient try adjusting your ingredient. <br>(For Example: If you entered "soda," try "soda water" or "club soda")<span>');
 let searchType = 'cocktail name';
 
 function filterAlcContent(value, results){
@@ -48,19 +49,35 @@ function deepFilterAlc(value, result){
 
 //Filters results to a specific liquor
 function filterLiquor(value, results){
-  let newResults = results.filter(element => containsValue(element, value));
-  return newResults;
+  if (value === 'Select A Liquor'){
+    return results;
+  } else {
+    return results.filter(element => containsValue(element, value));
+  }
 }
 
 //Determines if drink object contains a value
 function containsValue(drinkObject, value){
   let found = false;
-  Object.keys(drinkObject).forEach(function(key) {
-    if (drinkObject[key] === value) {
-      found = true;
-    }
-  });
-return found;
+  if (value === 'Show All'){
+		found = true;
+	} else {
+    Object.keys(drinkObject).forEach(function(key) {
+      let keyVal = drinkObject[key];
+      if (found === true){
+        return found;
+      } else if (keyVal === null){
+        found = false;
+      } else if (keyVal.includes(value)){
+        found = true;
+        return found;
+      } else if (keyVal.includes(value.toLowerCase())){
+        found = true;
+        return found;
+      }
+    });
+  }
+  return found;
 }
 
 //Builds drink cards
@@ -85,6 +102,7 @@ function getRemoteJson(url) {
     return jsonresult;
   })
   .catch(function(error){
+    Materialize.toast($toastContent, 10000);
     console.log('Your error was: ('+error+') ')
     throw error;
   });
@@ -153,7 +171,6 @@ function getSearchInput(searchType){
 // Sets default search type to 'cocktail name';
 // Determines the correct URL to use in getRemoteJson function
 function determineURL(searchType, searchInput){
-  // console.log(searchInput);
   if(searchType === 'ingredient'){
     return `http://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${searchInput}`;
   } else if(searchType === 'cocktail name'){
@@ -177,6 +194,16 @@ function removeResults(){
 function removeSearchFields(){
   while (searchRow.firstChild) {
     searchRow.removeChild(searchRow.firstChild);
+  }
+}
+
+//Function to determine if search returns no results and notify user
+function noResults(drinkResults, drinksAfterFilter){
+  debugger;
+  if (drinkResults === null){
+    Materialize.toast($toastContent, 8000);
+  } else if (drinksAfterFilter === false){
+    Materialize.toast($toastContent, 8000);
   }
 }
 
@@ -244,9 +271,14 @@ form.addEventListener("submit", function(event){
   console.log(searchURL);
   getRemoteJson(searchURL).then(function(res) {
     let drinkResults = res.drinks;
+    let drinksAfterFilter = false;
+    let drinkCount = drinkResults.length
+    if (drinkResults === null){
+      Materialize.toast($toastContent, 10000)
+    } else {
     if (searchType === 'cocktail name'){
-      drinkResults = filterAlcContent(alcoholicFilter, drinkResults);
-      drinkResults = filterLiquor(liquorFilter, drinkResults);
+        drinkResults = filterAlcContent(alcoholicFilter, drinkResults);
+        drinkResults = filterLiquor(liquorFilter, drinkResults);
     }
     drinkResults.forEach(function(ele, i) {
       let id = ele.idDrink;
@@ -264,15 +296,15 @@ form.addEventListener("submit", function(event){
         div.append(buildCard(picture, title, recipe, instructions));
         distributeCards(i, div);
       } else {
+        count = drinkResults.length;
         getRemoteJson(idURL).then(function(res){
+          count--;
+          if (count === 0){
+            noResults(drinkResults, drinksAfterFilter);
+          }
           let currDrink = res.drinks[0];
-          if (deepFilterAlc(alcoholicFilter, currDrink)){
-            console.log('Matches filter');
-          }
-          if (containsValue(currDrink, liquorFilter)) {
-            console.log('Liquor found')
-          }
           if ( (deepFilterAlc(alcoholicFilter, currDrink)) && (containsValue(currDrink, liquorFilter)) ){
+            drinksAfterFilter = true;
             recipe = removeFalse(ingsToArray(currDrink, 'strIngredient', 'strMeasure'));
             instructions = (currDrink.strInstructions);
             div.append(buildCard(picture, title, recipe, instructions));
@@ -281,5 +313,6 @@ form.addEventListener("submit", function(event){
         });
       }
     })
+    }
   })
 });
