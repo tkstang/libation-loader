@@ -11,8 +11,30 @@
     /*font-size: 48px;*/
 }
 
+#fav-body {
+  padding-bottom: 20px;
+  padding-left: 20px;
+}
+
+.card .card-reveal .card-favorite {
+	position: absolute;
+  right: 1.4rem;
+  bottom: 0.7rem;
+  cursor: pointer;
+}
+
+.collapsible-header h4 {
+  text-align: center;
+}
+
 #dropdown1 li:hover, #dropdown1 li.active, #dropdown1 li.selected {
   background-color: #444444;
+}
+
+#submit-search {
+	position: relative;
+	top: 25%;
+	transform: translateY(-50%);
 }
 
 #footer-copyright {
@@ -21,7 +43,7 @@
 
 h2 {
   color: white;
-  font-size: 4.0rem;
+  font-size: 6.0rem;
   line-height: 110%;
   margin: 1.78rem 0 1.424rem 0;
 }
@@ -38,21 +60,27 @@ nav .brand-logo {
 }
 
 .header-content {
+    font-family: 'Great Vibes', cursive;
+    /*font-family: 'Tangerine', cursive;*/
     position: relative;
     text-align: left;
-    padding-top: 120px;
+    padding-top: 140px;
     padding-left: 60px;
-    padding-bottom: 160px;f
+    padding-bottom: 160px;
 }
 
 body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
+		/*font-family: 'Dosis', sans-serif;*/
+    font-family: 'Josefin Slab', serif;
   }
 
 main {
     flex: 1 0 auto;
+		/*font-family: 'Dosis', sans-serif;*/
+    font-family: 'Josefin Slab', serif;
   }
 
 .marketing-head {

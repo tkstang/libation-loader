@@ -1,11 +1,10 @@
-<!DOCTYPE html>
+chr<!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Dosis|Great+Vibes|Tangerine|Josefin+Slab" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <title>Libation Loader</title>
 </head>
@@ -13,14 +12,6 @@
 <body>
     <nav>
         <ul id="dropdown1" class="dropdown-content #212121 grey darken-4">
-					<li><a href="#!" class="orange-text text-lighten-1" id="load-landing">Home</a></li>
-					<li class="divider"></li>
-					<li><a href="#!" class="orange-text text-lighten-1" id="load-favs">Favorites</a></li>
-					<li class="divider"></li>
-					<li></li>
-					<!-- <li class="divider"></li> -->
-					<li><a href="#!" class="orange-text text-lighten-1" id="load-search">Search By:</a></li>
-					<li class="divider"></li>
             <li><a href="#!" class="orange-text text-lighten-1" id="search-name">Cocktail Name</a></li>
 			<li class="divider"></li>
             <li><a href="#!" class="orange-text text-lighten-1" id="search-ingredient">Ingredients</a></li>
@@ -28,6 +19,12 @@
             <li><a href="#!" class="orange-text text-lighten-1" id="search-category">Category</a></li>
 			<li class="divider"></li>
             <li><a href="#!" class="orange-text text-lighten-1" id="search-random">Surprise Me</a></li>
+            <li class="divider"></li>
+						<li><a href="#!" class="orange-text text-lighten-1" id="load-landing">Home</a></li>
+            <li class="divider"></li>
+            <li><a href="#!" class="orange-text text-lighten-1" id="load-search">Search</a></li>
+            <li class="divider"></li>
+            <li><a href="#!" class="orange-text text-lighten-1" id="load-favs">Favorites</a></li>
             <li class="divider"></li>
         </ul>
         <div class="nav-wrapper #212121 grey darken-4">
@@ -50,7 +47,7 @@
     </div>
     <main>
         <div class="container" id="content">
-					<div class="row" id="landing">
+					<div class="row" id="landing" style="display: none">
 							<br><br>
 							<div class="col s1">
 							</div>
@@ -67,23 +64,24 @@
 									</div>
 									<div class="row">
 											<div class="col s12">
-													<h6 class="valign center-align">You may notice many cocktails do not yet have pictures or that there is a cocktail you would like to see on the list.  Well hot damn! We would like to see it on the list too!  Please send any picture or recipe additions to the <a href="mailto:stang.tk@gmail.com">drink curator</a>.  Thanks for stopping by and please enjoy responsibly.  Cheers!</h6>
+													<h6 class="valign center-align">You may notice many cocktails do not yet have pictures or that there is a cocktail you would like to see on the list.  Well hot damn! We would like to see it on the list too!  Please send any picture or recipe additions to the <a href="mailto:stang.tk@gmail.com">Drink Curator</a>.  Thanks for stopping by and please enjoy responsibly.  Cheers!</h6>
 											</div>
 									</div>
 							</div>
 							<div class="col s1">
 							</div>
+							<br>
 					</div>
             <div class="row">
-                <form class="col s12" id="search-form" style="display: none">
-                    <br><br>
+                <br>
+                <!-- <form class="col s12" id="search-form">
                     <div class="row" id="search-row">
                         <div class="input-field">
                             <input placeholder="Enter the name of your desired cocktail" id="cocktail-placeholder" type="text" class="validate">
                             <label for="cocktail-name">Cocktail Name</label>
                         </div>
 
-                        <!-- Hidden Category Search Input -->
+
                         <div class="input-field" id="category-select" style="display: none">
                             <select id="cat-select">
                                 <option value="" disabled selected>Select A Category</option>
@@ -101,7 +99,6 @@
                         <label for="cat-select" id="cat-label">Choose to Search By Specific Drink Categories</label>
                         </div>
                     </div>
-                    <!-- <div class='row' id="ingredient-row" style="display: none"> -->
                     <div class="input-field" id="cocktail-name" style="display: none">
                         <input placeholder="Enter the name of your desired cocktail" id="cocktail-input" type="text" class="validate">
                         <label for="cocktail-name">Cocktail Name</label>
@@ -110,7 +107,6 @@
                         <input placeholder="Enter an Ingredient to Search" id="ingredient-input" type="text" class="validate">
                         <label for="ingredient">Ingredient</label>
                     </div>
-                    <!-- </div> -->
 
                     <div class="row">
                         <div class="input-field">
@@ -126,7 +122,7 @@
                 <div class="row">
                 <div class="input-field">
                     <select id="liquor-filter">
-                        <option value="" disabled selected>Select a Liquor</option>
+                        <option value="" disabled selected>Select A Liquor</option>
                         <option value="showAll">Show All</option>
                         <option value="vodka">Vodka</option>
                         <option value="gin">Gin</option>
@@ -144,30 +140,12 @@
                     </div>
                     <div class="row">
                         <!-- </div> -->
-                        <div class="row center">
-                            <input type="submit" class="btn-large waves-effect waves-light grey valign-wrapper" id="submit-search" value="I'm Thirsty">
-                        </div>
+                        <!-- <div class="row center">
+                            <input type="submit" class="btn-large waves-effect waves-light grey" id="submit-search" value="I'm Thirsty">
+                        </div> -->
                         <!-- </div> -->
-                </form>
+                <!-- </form>  -->
                 </div>
-                <div class="row" id="favorites-row" style="display: none">
-                    <br><br>
-                    <ul class="collapsible" data-collapsible="expandable" id="favorites-list">
-                        <li class="collapsible-header">
-                            <h4>Favorite Cocktails</h4></li>
-                            <li id="collapsible-skeleton" style="display: none">
-                                <div class="collapsible-header"><a class='card-favorite' id='favorite'>favorite</a>Title</div>
-                                <div class="collapsible-body">
-                                    <div id="fav-body">
-                                        <span id='recipe'>Recipe</span>
-                                        <br><br>
-                                        <span id='instructions'>Instructions</span>
-                                    </div>
-                                </div>
-                                </li>
-                            </ul>
-
-                        </div>
                 <div class="row">
                     <div class="col s6" id="search-results1">
                     </div>
@@ -182,7 +160,6 @@
                     <div class='card-reveal'><span class='card-title grey-text text-darken-4'>Title<i class='material-icons right'>close</i></span>
                         <p id='recipe'>Recipe</p>
                         <p id='instructions'>Instructions</p>
-                        <a class='card-favorite' id='favorite'></a>
                     </div>
                 </div>
 
@@ -210,7 +187,7 @@
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.js"></script>
-    <script type='text/javascript' src="js/script.js"></script>
+    <script type='text/javascript' src="js/script3.js"></script>
 
 </body>
 

@@ -2,12 +2,9 @@ $(document).ready(function() {
   $('select').material_select();
   $(".dropdown-button").dropdown();
 });
-
-const submit = document.getElementById('submit-search');
+let submit = document.getElementById('submit-search');
 const content = document.getElementById('content');
-const form = document.getElementById('search-form');
 const landing = document.getElementById('landing');
-const favorites = document.getElementById('favorites-row')
 const loadLanding = document.getElementById('load-landing');
 const loadFavs = document.getElementById('load-favs');
 const loadSearch = document.getElementById('load-search');
@@ -17,7 +14,7 @@ const linkCat = document.getElementById('search-category');
 const linkRandom = document.getElementById('search-random');
 const searchResults1 = document.getElementById('search-results1');
 const searchResults2 = document.getElementById('search-results2');
-const searchRow = document.getElementById('search-row');
+let searchRow = '';
 const hiddenCard = document.getElementById('hidden');
 const catInput = document.getElementById('cat-select');
 const catLabel = document.getElementById('cat-label');
@@ -27,10 +24,11 @@ const cocktailInput = document.getElementById('cocktail-input');
 const ingredientSearch = document.getElementById('ingredient');
 const cocktailSearch = document.getElementById('cocktail-name');
 const activeSelected = document.getElementsByClassName('cocktail-name');
-const favList = document.getElementById('favorites-list');
 const $toastContent = $('<span>Sorry but your search did not return any results. <br>There are some ways to try to improve your search results: <br>If you are searching by ingredient try adjusting your ingredient. <br>(For Example: If you entered "soda," try "soda water" or "club soda")<span>');
+// let form = document.getElementById('search-form');
+let form;
+let appendedForm;
 let searchType = 'cocktail name';
-let favCocktails = [];
 
 let myHeaders = new Headers();
 
@@ -39,7 +37,6 @@ let myInit = { method: 'GET',
                mode: 'no-cors',
                cache: 'default' };
 
-// Alcoholic/Virgin filter for drinks results searched by cocktail name
 function filterAlcContent(value, results){
   if (value === 'noBooze'){
     return results.filter(element => element.strAlcoholic === "Non alcoholic");
@@ -66,7 +63,7 @@ function deepFilterAlc(value, result){
 
 //Filters results to a specific liquor
 function filterLiquor(value, results){
-  if (value === 'Select a Liquor'){
+  if (value === 'Select A Liquor'){
     return results;
   } else {
     return results.filter(element => containsValue(element, value));
@@ -97,19 +94,6 @@ function containsValue(drinkObject, value){
   return found;
 }
 
-function addToStorage(cocktailObject){
-  if (localStorage.getItem("favorites") === null){
-    localStorage.setItem("favorites", JSON.Stringify([]));
-  }
-  favCocktails = JSON.parse(localStorage.getItem("favorites"));
-  if (favCocktails.indexOf(cocktailObject) === -1){
-    favCocktails.push(cocktailObject);
-    localStorage.setItem("favorites", JSON.stringify(favCocktails));
-    console.log(favCocktails);
-    console.log(window.localStorage);
-  }
-}
-
 //Builds drink cards
 function buildCard(picture, title, recipe, instructions){
 	let cardClone = hiddenCard.cloneNode(true);
@@ -119,35 +103,7 @@ function buildCard(picture, title, recipe, instructions){
 	cardClone.children[2].children[0].innerHTML = `${title}<i class='material-icons right'>close</i>`;
 	cardClone.children[2].children[1].innerHTML = recipe;
 	cardClone.children[2].children[2].innerHTML = instructions;
-  cardClone.children[2].children[3].innerHTML = `<i class="material-icons" id="favorite">favorite_border</i>`;
-  let addFavoriteIcon = cardClone.children[2].children[3];
-
-  addFavoriteIcon.addEventListener("click", function(event){
-    event.preventDefault();
-    addFavoriteIcon.innerHTML = `<i class="material-icons">favorite</i>`;
-    let cocktailObject = {
-      drinkName: title,
-      drinkPic: picture,
-      recipe: recipe,
-      instructions: instructions
-    }
-    addToStorage(cocktailObject);
-  })
 	return cardClone;
-}
-
-// Builds table of saved favorite cocktails
-function buildFavorites(){
-  favCocktails = JSON.parse(localStorage.getItem("favorites"));
-  favCocktails.forEach(function(element){
-    let listItem = document.getElementById('collapsible-skeleton');
-    listItem = listItem.cloneNode(true);
-    listItem.removeAttribute("style");
-    listItem.children[0].innerHTML = `<i class="material-icons" id="favorite">favorite</i>${element.drinkName}`;
-    listItem.children[1].children[0].children[0].innerHTML = element.recipe;
-    listItem.children[1].children[0].children[3].innerHTML = element.instructions;
-    favList.appendChild(listItem);
-  })
 }
 
 //Fetches from API and returns object
@@ -213,7 +169,7 @@ function distributeCards(index, div){
 
 //Gets the value of a given search field
 function getSearchInput(searchType){
-  let input = form.children[2].children[0].children[0];
+  let input = form.children[0].children[0].children[0];
   let searchValue = '';
   if ((searchType === 'cocktail name') || (searchType === 'ingredient') ){
     searchValue = input.value;
@@ -226,6 +182,7 @@ function getSearchInput(searchType){
   return searchValue;
 }
 
+// Sets default search type to 'cocktail name';
 // Determines the correct URL to use in getRemoteJson function
 function determineURL(searchType, searchInput){
   if(searchType === 'ingredient'){
@@ -247,15 +204,6 @@ function removeResults(){
   }
 }
 
-// Loads search form to page
-function loadSearchForm(){
-	removeResults();
-	landing.setAttribute("style", "display: none");
-	favorites.setAttribute("style", "display: none");
-	form.setAttribute("style", "");
-  removeSearchFields();
-}
-
 // Removes search fields from page
 function removeSearchFields(){
   while (searchRow.firstChild) {
@@ -264,14 +212,15 @@ function removeSearchFields(){
 }
 
 // Removes content from page
-function removeContent(element){
-  while (element.firstChild) {
-    element.removeChild(element.firstChild);
+function removeContent(){
+  while (content.firstChild) {
+    content.removeChild(content.firstChild);
   }
 }
 
 //Function to determine if search returns no results and notify user
 function noResults(drinkResults, drinksAfterFilter){
+  debugger;
   if (drinkResults === null){
     Materialize.toast($toastContent, 8000);
   } else if (drinksAfterFilter === false){
@@ -293,47 +242,101 @@ function appendSearchField(searchField){
   searchRow.appendChild(clone);
 }
 
-loadLanding.addEventListener("click", function(event){
-  event.preventDefault();
-  removeResults();
-  form.setAttribute("style", "display: none");
-  favorites.setAttribute("style", "display: none");
-  landing.setAttribute("style", "");
-});
+let buttonRow;
+// function appendForm(){
+//   let clone = form.cloneNode(true);
+//   clone.removeAttribute("style");
+//   clone.id = 'appended-form';
+//   content.appendChild(clone);
+//   appendedForm = document.getElementById('appended-form');
+//   console.log(appendedForm);
+//   console.log(appendedForm.children[1]);
+//   searchRow = appendedForm.children[1];
+//   buttonRow = appendedForm.children[6].children[0];
+//   // buttonRow.removeChild(buttonRow.firstChild);
+//   buttonRow.innerHTML = `<input type="submit" class="btn-large waves-effect waves-light grey valign" id="submit-search" value="I'm Thirsty">`
+//   console.log(buttonRow);
+//   submit = document.getElementById("submit-search");
+//   console.log(submit);
+//   submit.onsubmit
+//   appendedForm.addEventListener("submit", formSubmit(event){
+//     });
+//     $('select').material_select();
+// }
+
+function buildSearch(){
+  debugger;
+  form = $('<form />', {
+    "class": 'col s12',
+    id:  'search-form'
+  })
+  .append($('<div />'), {
+    "class": 'row',
+    id: 'search-row'
+  })
+  .append($('<div />'), {
+    "class": 'input-field',
+    id: 'cocktail-name'
+  })
+  .append($('<input>'), {
+    "class": 'validate',
+    id: 'cocktail-input',
+    type: 'text',
+    placeholder: 'Enter the name of your desired cocktail'
+  })
+  $('#cocktail-name').append($('<label />'), {
+    for: 'cocktail-name',
+    text: 'Cocktail Name'
+  })
+  $('#content').append.form;
+}
+// function buildSearch(){
+// 	let formElement = document.createElement('form');
+// 	formElement.id = "search-form";
+// 	formElement.className = "col s12";
+//   content.appendChild(formElement);
+// 	let search = document.createElement('div');
+// 	search.id = "search-row";
+// 	search.className = "row";
+// 	formElement.appendChild(search);
+// 	let cocktailClone = cocktailSearch.cloneNode(true);
+// 	cocktailSearch.removeAttribute("style");
+// 	search.appendChild(cocktailClone);
+//   form = document.getElementById('search-form');
+//   console.log(form);
+//   searchRow = document.getElementById('search-row');
+// }
 
 loadSearch.addEventListener("click", function(event){
   event.preventDefault();
-	loadSearchForm();
-  appendSearchField(cocktailSearch);
-	searchType = "cocktail name";
+  removeContent();
+  buildSearch();
+    // $('select').material_select();
 });
 
-loadFavs.addEventListener("click", function(event){
+loadLanding.addEventListener("click", function(event){
   event.preventDefault();
-  removeResults();
-  landing.setAttribute("style", "display: none");
-  form.setAttribute("style", "display: none");
-  favorites.setAttribute("style", "");
-  buildFavorites();
+  removeContent();
+  append(landing, content);
 });
 
 linkIng.addEventListener("click", function(event){
   event.preventDefault();
-	loadSearchForm()
+  removeSearchFields();
   appendSearchField(ingredientSearch);
 	searchType = 'ingredient';
 });
 
 linkName.addEventListener("click", function(event){
   event.preventDefault();
-	loadSearchForm();
+  removeSearchFields();
   appendSearchField(cocktailSearch);
   searchType = 'cocktail name';
 })
 
 linkCat.addEventListener("click", function(event){
   event.preventDefault();
-	loadSearchForm();
+  removeSearchFields();
   let div = document.createElement('div');
   div.className = 'input-field';
   div.id = 'category-select';
@@ -364,7 +367,7 @@ linkRandom.addEventListener("click", function(event){
   })
 })
 
-form.addEventListener("submit", function(event){
+function formSubmit(event){
   event.preventDefault();
   removeResults();
   let alcoholicFilter = document.getElementById('alcoholic-filter').value;
@@ -418,4 +421,4 @@ form.addEventListener("submit", function(event){
     })
     }
   })
-});
+}
