@@ -6,6 +6,7 @@ $(document).ready(function() {
 const submit = document.getElementById('submit-search');
 const content = document.getElementById('content');
 const form = document.getElementById('search-form');
+const formRow = document.getElementById('form-row');
 const landing = document.getElementById('landing');
 const favorites = document.getElementById('favorites-row')
 const loadLanding = document.getElementById('load-landing');
@@ -252,7 +253,7 @@ function loadSearchForm(){
 	removeResults();
 	landing.setAttribute("style", "display: none");
 	favorites.setAttribute("style", "display: none");
-	form.setAttribute("style", "");
+	formRow.setAttribute("style", "");
   removeSearchFields();
 }
 
@@ -296,23 +297,23 @@ function appendSearchField(searchField){
 loadLanding.addEventListener("click", function(event){
   event.preventDefault();
   removeResults();
-  form.setAttribute("style", "display: none");
+  formRow.setAttribute("style", "display: none");
   favorites.setAttribute("style", "display: none");
   landing.setAttribute("style", "");
 });
 
-loadSearch.addEventListener("click", function(event){
-  event.preventDefault();
-	loadSearchForm();
-  appendSearchField(cocktailSearch);
-	searchType = "cocktail name";
-});
+// loadSearch.addEventListener("click", function(event){
+//   event.preventDefault();
+// 	loadSearchForm();
+//   appendSearchField(cocktailSearch);
+// 	searchType = "cocktail name";
+// });
 
 loadFavs.addEventListener("click", function(event){
   event.preventDefault();
   removeResults();
   landing.setAttribute("style", "display: none");
-  form.setAttribute("style", "display: none");
+  formRow.setAttribute("style", "display: none");
   favorites.setAttribute("style", "");
   buildFavorites();
 });

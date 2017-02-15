@@ -13,21 +13,17 @@
 <body>
     <nav>
         <ul id="dropdown1" class="dropdown-content #212121 grey darken-4">
-					<li><a href="#!" class="orange-text text-lighten-1" id="load-landing">Home</a></li>
+					<li><a href="#!" class="orange-text text-lighten-1" id="load-landing">Take Me Home</a></li>
 					<li class="divider"></li>
-					<li><a href="#!" class="orange-text text-lighten-1" id="load-favs">Favorites</a></li>
+					<li><a href="#!" class="orange-text text-lighten-1" id="load-favs">My Favorites</a></li>
 					<li class="divider"></li>
-					<li></li>
-					<!-- <li class="divider"></li> -->
-					<li><a href="#!" class="orange-text text-lighten-1" id="load-search">Search By:</a></li>
-					<li class="divider"></li>
-            <li><a href="#!" class="orange-text text-lighten-1" id="search-name">Cocktail Name</a></li>
+            <li><a href="#!" class="orange-text text-lighten-1" id="search-name">By Cocktail Name</a></li>
 			<li class="divider"></li>
-            <li><a href="#!" class="orange-text text-lighten-1" id="search-ingredient">Ingredients</a></li>
+            <li><a href="#!" class="orange-text text-lighten-1" id="search-ingredient">By Ingredients</a></li>
 			<li class="divider"></li>
-            <li><a href="#!" class="orange-text text-lighten-1" id="search-category">Category</a></li>
+            <li><a href="#!" class="orange-text text-lighten-1" id="search-category">By Category</a></li>
 			<li class="divider"></li>
-            <li><a href="#!" class="orange-text text-lighten-1" id="search-random">Surprise Me</a></li>
+            <li><a href="#!" class="orange-text text-lighten-1" id="search-random">Just Surprise Me</a></li>
             <li class="divider"></li>
         </ul>
         <div class="nav-wrapper #212121 grey darken-4">
@@ -52,9 +48,9 @@
         <div class="container" id="content">
 					<div class="row" id="landing">
 							<br><br>
-							<div class="col s1">
-							</div>
-							<div class="col s10">
+							<!-- <div class="col s1">
+							</div> -->
+							<div class="col s12">
 									<div class="row">
 											<div class="col s12">
 													<h6 class="valign center-align">Welcome to Libation Loader, a website built for the thirsty.  You're thirsty aren't you?  Me too my friend, you've come to the right place.  Libation Loader allows you to search over 3,000 cocktails inclusive of virgin cocktail offerings for both the weak and the weak from last night.  Each cocktail includes the ingredient list and a recipe to concoct the creation yourself.</h6>
@@ -71,11 +67,11 @@
 											</div>
 									</div>
 							</div>
-							<div class="col s1">
-							</div>
+							<!-- <div class="col s1">
+							</div> -->
 					</div>
-            <div class="row">
-                <form class="col s12" id="search-form" style="display: none">
+            <div class="row" id="form-row" style="display: none">
+                <form class="col s12" id="search-form">
                     <br><br>
                     <div class="row" id="search-row">
                         <div class="input-field">
@@ -150,24 +146,6 @@
                         <!-- </div> -->
                 </form>
                 </div>
-                <div class="row" id="favorites-row" style="display: none">
-                    <br><br>
-                    <ul class="collapsible" data-collapsible="expandable" id="favorites-list">
-                        <li class="collapsible-header">
-                            <h4>Favorite Cocktails</h4></li>
-                            <li id="collapsible-skeleton" style="display: none">
-                                <div class="collapsible-header"><a class='card-favorite' id='favorite'>favorite</a>Title</div>
-                                <div class="collapsible-body">
-                                    <div id="fav-body">
-                                        <span id='recipe'>Recipe</span>
-                                        <br><br>
-                                        <span id='instructions'>Instructions</span>
-                                    </div>
-                                </div>
-                                </li>
-                            </ul>
-
-                        </div>
                 <div class="row">
                     <div class="col s6" id="search-results1">
                     </div>
@@ -185,7 +163,25 @@
                         <a class='card-favorite' id='favorite'></a>
                     </div>
                 </div>
+</div>
+                <div class="row" id="favorites-row" style="display: none">
+                    <br><br>
+                    <ul class="collapsible" data-collapsible="expandable" id="favorites-list">
+                        <li class="collapsible-header">
+                            <h4>Favorite Cocktails</h4></li>
+                            <li id="collapsible-skeleton" style="display: none">
+                                <div class="collapsible-header"><a class='card-favorite' id='favorite'>favorite</a>Title</div>
+                                <div class="collapsible-body">
+                                    <div id="fav-body">
+                                        <span id='recipe'>Recipe</span>
+                                        <br><br>
+                                        <span id='instructions'>Instructions</span>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
 
+                    </div>
             </div>
     </main>
     <footer class="page-footer #212121 grey darken-4">

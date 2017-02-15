@@ -2,7 +2,8 @@
     background: url('../img/whiskey.jpg');
     background-repeat: no-repeat;
     background-size: cover;
-    height: auto;
+    height: 25rem;
+    /*height: auto;*/
     color: "white";
 }
 
@@ -64,9 +65,11 @@ nav .brand-logo {
     /*font-family: 'Tangerine', cursive;*/
     position: relative;
     text-align: left;
-    padding-top: 140px;
+    bottom: -8rem;
+    left: 2rem;
+    /*padding-top: 140px;
     padding-left: 60px;
-    padding-bottom: 160px;
+    padding-bottom: 160px;*/
 }
 
 body {
