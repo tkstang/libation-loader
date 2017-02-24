@@ -13,30 +13,23 @@
 <body>
     <nav>
         <ul id="dropdown1" class="dropdown-content #212121 grey darken-4">
-					<li><a href="#!" class="orange-text text-lighten-1" id="load-landing">Take Me Home</a></li>
-					<li class="divider"></li>
-					<li><a href="#!" class="orange-text text-lighten-1" id="load-favs">My Favorites</a></li>
-					<li class="divider"></li>
+            <li><a href="#!" class="orange-text text-lighten-1" id="load-landing">Take Me Home</a></li>
+            <li class="divider"></li>
+            <li><a href="#!" class="orange-text text-lighten-1" id="load-favs">My Favorites</a></li>
+            <li class="divider"></li>
             <li><a href="#!" class="orange-text text-lighten-1" id="search-name">By Cocktail Name</a></li>
-			<li class="divider"></li>
+            <li class="divider"></li>
             <li><a href="#!" class="orange-text text-lighten-1" id="search-ingredient">By Ingredients</a></li>
-			<li class="divider"></li>
+            <li class="divider"></li>
             <li><a href="#!" class="orange-text text-lighten-1" id="search-category">By Category</a></li>
-			<li class="divider"></li>
+            <li class="divider"></li>
             <li><a href="#!" class="orange-text text-lighten-1" id="search-random">Just Surprise Me</a></li>
             <li class="divider"></li>
         </ul>
         <div class="nav-wrapper #212121 grey darken-4">
             <ul class="right">
-                <!-- Dropdown Trigger -->
                 <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Search Options<i class="material-icons right">arrow_drop_down</i></a></li>
             </ul>
-            <!-- <ul id="nav-mobile" class="left hide-on-med-and-down">
-                <li><a href="#">I'm Thirsty</a></li>
-            </ul>
-            <div class=".left-align">
-            <a href="index.html" class="brand-logo .right">Libation Loader</a>
-            </div> -->
         </div>
     </nav>
     <div class="header">
@@ -46,30 +39,26 @@
     </div>
     <main>
         <div class="container" id="content">
-					<div class="row" id="landing">
-							<br><br>
-							<!-- <div class="col s1">
-							</div> -->
-							<div class="col s12">
-									<div class="row">
-											<div class="col s12">
-													<h6 class="valign center-align">Welcome to Libation Loader, a website built for the thirsty.  You're thirsty aren't you?  Me too my friend, you've come to the right place.  Libation Loader allows you to search over 3,000 cocktails inclusive of virgin cocktail offerings for both the weak and the weak from last night.  Each cocktail includes the ingredient list and a recipe to concoct the creation yourself.</h6>
-											</div>
-									</div>
-									<div class="row">
-											<div class="col s12">
-													<h6 class="valign center-align">We currently offer four methods by which to search: by cocktail name, by a specific ingredient, by drink category and completely random for those of you feeling adventurous.  The results are currently limited to 250 cocktails so we've added both an alcoholic/non-alcoholic filter (very helpful for entertainers looking to make something fun for guests) as well as a liquor filter with which you can filter your search results to only those recipes which contain a specific liquor.</h6>
-											</div>
-									</div>
-									<div class="row">
-											<div class="col s12">
-													<h6 class="valign center-align">You may notice many cocktails do not yet have pictures or that there is a cocktail you would like to see on the list.  Well hot damn! We would like to see it on the list too!  Please send any picture or recipe additions to the <a href="mailto:stang.tk@gmail.com">drink curator</a>.  Thanks for stopping by and please enjoy responsibly.  Cheers!</h6>
-											</div>
-									</div>
-							</div>
-							<!-- <div class="col s1">
-							</div> -->
-					</div>
+            <div class="row" id="landing">
+                <br><br>
+                <div class="col s12">
+                    <div class="row">
+                        <div class="col s12">
+                            <h6 class="valign center-align">Welcome to Libation Loader, a website built for the thirsty.  You're thirsty aren't you?  Me too my friend, you've come to the right place.  Libation Loader allows you to search over 3,000 cocktails inclusive of virgin cocktail offerings for both the weak and the weak from last night.  Each cocktail includes the ingredient list and a recipe to concoct the creation yourself.</h6>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12">
+                            <h6 class="valign center-align">We currently offer four methods by which to search: by cocktail name, by a specific ingredient, by drink category and completely random for those of you feeling adventurous.  The results are currently limited to 250 cocktails so we've added both an alcoholic/non-alcoholic filter (very helpful for entertainers looking to make something fun for guests) as well as a liquor filter with which you can filter your search results to only those recipes which contain a specific liquor.</h6>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12">
+                            <h6 class="valign center-align">You may notice many cocktails do not yet have pictures or that there is a cocktail you would like to see on the list.  Well hot damn! We would like to see it on the list too!  Please send any picture or recipe additions to the <a href="mailto:stang.tk@gmail.com">drink curator</a>.  Thanks for stopping by and please enjoy responsibly.  Cheers!</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row" id="form-row" style="display: none">
                 <form class="col s12" id="search-form">
                     <br><br>
@@ -78,8 +67,6 @@
                             <input placeholder="Enter the name of your desired cocktail" id="cocktail-placeholder" type="text" class="validate">
                             <label for="cocktail-name">Cocktail Name</label>
                         </div>
-
-                        <!-- Hidden Category Search Input -->
                         <div class="input-field" id="category-select" style="display: none">
                             <select id="cat-select">
                                 <option value="" disabled selected>Select A Category</option>
@@ -94,10 +81,9 @@
                                 <option value="party-drink">Punch / Party Drink</option>
                                 <option value="beer">Beer</option>
                              </select>
-                        <label for="cat-select" id="cat-label">Choose to Search By Specific Drink Categories</label>
+                            <label for="cat-select" id="cat-label">Choose to Search By Specific Drink Categories</label>
                         </div>
                     </div>
-                    <!-- <div class='row' id="ingredient-row" style="display: none"> -->
                     <div class="input-field" id="cocktail-name" style="display: none">
                         <input placeholder="Enter the name of your desired cocktail" id="cocktail-input" type="text" class="validate">
                         <label for="cocktail-name">Cocktail Name</label>
@@ -106,7 +92,6 @@
                         <input placeholder="Enter an Ingredient to Search" id="ingredient-input" type="text" class="validate">
                         <label for="ingredient">Ingredient</label>
                     </div>
-                    <!-- </div> -->
 
                     <div class="row">
                         <div class="input-field">
@@ -119,9 +104,9 @@
                             <label for="alcoholic-filter">Choose to Filter Alcoholic/Virgin or Show Both</label>
                         </div>
                     </div>
-                <div class="row">
-                <div class="input-field">
-                    <select id="liquor-filter">
+                    <div class="row">
+                        <div class="input-field">
+                            <select id="liquor-filter">
                         <option value="" disabled selected>Select a Liquor</option>
                         <option value="showAll">Show All</option>
                         <option value="vodka">Vodka</option>
@@ -134,19 +119,17 @@
                         <option value="rum">Rum</option>
                         <option value="tequila">Tequila</option>
                     </select>
-                    <label for="liquor-filter">Choose to Filter Results to a Specific Liquor</label>
-                </div>
+                            <label for="liquor-filter">Choose to Filter Results to a Specific Liquor</label>
+                        </div>
 
                     </div>
                     <div class="row">
-                        <!-- </div> -->
                         <div class="row center">
                             <input type="submit" class="btn-large waves-effect waves-light grey valign-wrapper" id="submit-search" value="I'm Thirsty">
                         </div>
-                        <!-- </div> -->
                 </form>
                 </div>
-                <div class="row">
+                <div class="row" id="results-row">
                     <div class="col s6" id="search-results1">
                     </div>
                     <div class="col s6" id="search-results2">
@@ -163,29 +146,28 @@
                         <a class='card-favorite' id='favorite'></a>
                     </div>
                 </div>
-</div>
-                <div class="row" id="favorites-row" style="display: none">
-                    <br><br>
-                    <ul class="collapsible" data-collapsible="expandable" id="favorites-list">
-                        <li class="collapsible-header">
-                            <h4>Favorite Cocktails</h4></li>
-                            <li id="collapsible-skeleton" style="display: none">
-                                <div class="collapsible-header"><a class='card-favorite' id='favorite'>favorite</a>Title</div>
-                                <div class="collapsible-body">
-                                    <div id="fav-body">
-                                        <span id='recipe'>Recipe</span>
-                                        <br><br>
-                                        <span id='instructions'>Instructions</span>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-
-                    </div>
             </div>
+            <div class="row" id="favorites-row" style="display: none">
+                <br><br>
+                <ul class="collapsible" data-collapsible="expandable" id="favorites-list">
+                    <li class="collapsible-header">
+                        <h4>Favorite Cocktails</h4></li>
+                    <li id="collapsible-skeleton" style="display: none">
+                        <div class="collapsible-header"><a class='card-favorite' id='favorite'>favorite</a>Title</div>
+                        <div class="collapsible-body">
+                            <div id="fav-body">
+                                <span id='recipe'>Recipe</span>
+                                <br><br>
+                                <span id='instructions'>Instructions</span>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
     </main>
     <footer class="page-footer #212121 grey darken-4">
-        <!-- <div class="container"> -->
         <div class="row">
             <div class="col s6">
                 <ul>
@@ -196,17 +178,15 @@
                 <h5 class="white-text right">Libation Loader</h5><br><br>
             </div>
         </div>
-        <!-- </div> -->
         <div class="footer-copyright #000000 black" id="footer-copyright">
-            <!-- <div class="container"> -->
             © 2017 Thomas Stang
-            <!-- </div> -->
         </div>
     </footer>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.2/fetch.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.js"></script>
-	<script src="cocktailArray4.js"></script>
+    <script src="cocktailArray4.js"></script>
     <script type='text/javascript' src="js/script.js"></script>
 
 </body>

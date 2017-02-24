@@ -40,7 +40,6 @@ let myInit = { method: 'GET',
                mode: 'no-cors',
                cache: 'default' };
 
-// Alcoholic/Virgin filter for drinks results searched by cocktail name
 function filterAlcContent(value, results){
   if (value === 'noBooze'){
     return results.filter(element => element.strAlcoholic === "Non alcoholic");
@@ -57,15 +56,12 @@ function deepFilterAlc(value, result){
     return true;
   } else if ((result.strAlcoholic === "Alcoholic") && (value === 'showBooze')){
       return true;
-  } else if (value === 'showAll'){
-      return true;
-  } else if (value === ''){
+  } else if ((value === 'showAll') || (value === '')){
       return true;
   }
   return false;
 }
 
-//Filters results to a specific liquor
 function filterLiquor(value, results){
   if (value === 'Select a Liquor'){
     return results;
@@ -74,10 +70,9 @@ function filterLiquor(value, results){
   }
 }
 
-//Determines if drink object contains a value
 function containsValue(drinkObject, value){
   let found = false;
-  if (value === 'Show All'){
+  if (value === 'Show All' || 'Select a Liquor'){
 		found = true;
 	} else {
     Object.keys(drinkObject).forEach(function(key) {
@@ -111,17 +106,17 @@ function addToStorage(cocktailObject){
   }
 }
 
-//Builds drink cards
 function buildCard(picture, title, recipe, instructions){
-	let cardClone = hiddenCard.cloneNode(true);
+	const cardClone = hiddenCard.cloneNode(true);
+	const cardChildren = cardClone.children;
+	const addFavoriteIcon = cardChildren[2].children[3];
   cardClone.removeAttribute("style");
-	cardClone.children[0].children[0].src = picture;
-	cardClone.children[1].children[0].innerHTML = `${title}<i class='material-icons right'>more_vert</i>`;
-	cardClone.children[2].children[0].innerHTML = `${title}<i class='material-icons right'>close</i>`;
-	cardClone.children[2].children[1].innerHTML = recipe;
-	cardClone.children[2].children[2].innerHTML = instructions;
-  cardClone.children[2].children[3].innerHTML = `<i class="material-icons" id="favorite">favorite_border</i>`;
-  let addFavoriteIcon = cardClone.children[2].children[3];
+	cardChildren[0].children[0].src = picture;
+	cardChildren[1].children[0].innerHTML = `${title}<i class='material-icons right'>more_vert</i>`;
+	cardChildren[2].children[0].innerHTML = `${title}<i class='material-icons right'>close</i>`;
+	cardChildren[2].children[1].innerHTML = recipe;
+	cardChildren[2].children[2].innerHTML = instructions;
+  cardChildren[2].children[3].innerHTML = `<i class="material-icons" id="favorite">favorite_border</i>`;
 
   addFavoriteIcon.addEventListener("click", function(event){
     event.preventDefault();
@@ -161,7 +156,7 @@ function getRemoteJson(url, settings) {
     return jsonresult;
   })
   .catch(function(error){
-    Materialize.toast($toastContent, 10000);
+    // Materialize.toast($toastContent, 10000);
     console.log('Your error was: ('+error+') ')
     throw error;
   });
@@ -253,6 +248,7 @@ function loadSearchForm(){
 	removeResults();
 	landing.setAttribute("style", "display: none");
 	favorites.setAttribute("style", "display: none");
+  form.setAttribute("style", "");
 	formRow.setAttribute("style", "");
   removeSearchFields();
 }
@@ -348,22 +344,44 @@ linkCat.addEventListener("click", function(event){
 
 linkRandom.addEventListener("click", function(event){
   event.preventDefault();
-  removeResults();
-  getRemoteJson('https://www.thecocktaildb.com/api/json/v1/1/random.php', myInit)
-  .then(function(result) {
-    let randomDrink = result.drinks[0];
-    let div = document.createElement('div');
-    let picture = randomDrink.strDrinkThumb;
-    let title = randomDrink.strDrink;
-    let instructions = randomDrink.strInstructions
-    if (!picture){
-      picture = "img/whiskey.jpg";
-    }
-    let recipe = removeFalse(ingsToArray(randomDrink, 'strIngredient', 'strMeasure'));
-    div.append(buildCard(picture, title, recipe, instructions));
-    distributeCards(0, div);
-  })
+  loadSearchForm();
+  form.setAttribute("style", "display: none");
+  //more elegant solution for spacing(single column), this generates break every time random is clicked
+  let resRow = document.getElementById("results-row");
+  let lineBreak = document.createElement('br');
+  resRow.insertBefore(lineBreak, resRow.firstChild);
+  let randomIndex = (Math.floor(Math.random() * allDrinksArr.length));
+  let randomDrink = allDrinksArr[randomIndex];
+  let div = document.createElement('div');
+  let picture = randomDrink.strDrinkThumb;
+  let title = randomDrink.strDrink;
+  let instructions = randomDrink.strInstructions
+  if (!picture){
+    picture = "img/whiskey.jpg";
+  }
+  let recipe = removeFalse(ingsToArray(randomDrink, 'strIngredient', 'strMeasure'));
+  div.append(buildCard(picture, title, recipe, instructions));
+  distributeCards(0, div);
 })
+
+// linkRandom.addEventListener("click", function(event){
+//   event.preventDefault();
+//   removeResults();
+//   getRemoteJson('https://www.thecocktaildb.com/api/json/v1/1/random.php', myInit)
+//   .then(function(result) {
+//     let randomDrink = result.drinks[0];
+//     let div = document.createElement('div');
+//     let picture = randomDrink.strDrinkThumb;
+//     let title = randomDrink.strDrink;
+//     let instructions = randomDrink.strInstructions
+//     if (!picture){
+//       picture = "img/whiskey.jpg";
+//     }
+//     let recipe = removeFalse(ingsToArray(randomDrink, 'strIngredient', 'strMeasure'));
+//     div.append(buildCard(picture, title, recipe, instructions));
+//     distributeCards(0, div);
+//   })
+// })
 
 form.addEventListener("submit", function(event){
   event.preventDefault();
@@ -380,43 +398,44 @@ form.addEventListener("submit", function(event){
     if (drinkResults === null){
       Materialize.toast($toastContent, 10000)
     } else {
-    if (searchType === 'cocktail name'){
+      if (searchType === 'cocktail name'){
         drinkResults = filterAlcContent(alcoholicFilter, drinkResults);
         drinkResults = filterLiquor(liquorFilter, drinkResults);
-    }
-    drinkResults.forEach(function(ele, i) {
-      let id = ele.idDrink;
-      let idURL = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
-      let div = document.createElement('div');
-      let picture = ele.strDrinkThumb;
-      let title = ele.strDrink;
-      let instructions = ele.strInstructions
-      let recipe = '';
-      if (!picture){
-        picture = "img/whiskey.jpg";
       }
-      if (searchType === 'cocktail name'){
-        recipe = removeFalse(ingsToArray(ele, 'strIngredient', 'strMeasure'));
-        div.append(buildCard(picture, title, recipe, instructions));
-        distributeCards(i, div);
-      } else {
-        count = drinkResults.length;
-        getRemoteJson(idURL, myInit).then(function(res){
-          count--;
-          if (count === 0){
-            noResults(drinkResults, drinksAfterFilter);
-          }
-          let currDrink = res.drinks[0];
-          if ( (deepFilterAlc(alcoholicFilter, currDrink)) && (containsValue(currDrink, liquorFilter)) ){
-            drinksAfterFilter = true;
-            recipe = removeFalse(ingsToArray(currDrink, 'strIngredient', 'strMeasure'));
-            instructions = (currDrink.strInstructions);
-            div.append(buildCard(picture, title, recipe, instructions));
-            distributeCards(i, div);
-          }
-        });
-      }
-    })
+      drinkResults.forEach(function(ele, i) {
+        // change relevant lets to const
+        let id = ele.idDrink;
+        let idURL = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
+        let div = document.createElement('div');
+        let picture = ele.strDrinkThumb;
+        let title = ele.strDrink;
+        let instructions = ele.strInstructions
+        let recipe = '';
+        if (!picture){
+          picture = "img/whiskey.jpg";
+        }
+        if (searchType === 'cocktail name'){
+          recipe = removeFalse(ingsToArray(ele, 'strIngredient', 'strMeasure'));
+          div.append(buildCard(picture, title, recipe, instructions));
+          distributeCards(i, div);
+        } else {
+          count = drinkResults.length;
+          getRemoteJson(idURL, myInit).then(function(res){
+            count--;
+            if (count === 0){
+              noResults(drinkResults, drinksAfterFilter);
+            }
+            let currDrink = res.drinks[0];
+            if ( (deepFilterAlc(alcoholicFilter, currDrink)) && (containsValue(currDrink, liquorFilter)) ){
+              drinksAfterFilter = true;
+              recipe = removeFalse(ingsToArray(currDrink, 'strIngredient', 'strMeasure'));
+              instructions = (currDrink.strInstructions);
+              div.append(buildCard(picture, title, recipe, instructions));
+              distributeCards(i, div);
+            }
+          });
+        }
+      })
     }
   })
 });
