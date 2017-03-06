@@ -97,7 +97,7 @@ function containsValue(drinkObject, value){
 
 function addToStorage(cocktailObject){
   if (localStorage.getItem("favorites") === null){
-    localStorage.setItem("favorites", JSON.Stringify([]));
+    localStorage.setItem("favorites", '[]');
   }
   favCocktails = JSON.parse(localStorage.getItem("favorites"));
   if (favCocktails.indexOf(cocktailObject) === -1){
