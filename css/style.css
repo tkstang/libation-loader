@@ -38,6 +38,10 @@
 	transform: translateY(-50%);
 }
 
+#random-row {
+	margin-top: 50px;
+}
+
 #footer-copyright {
   padding-left: 10px;
 }
@@ -62,7 +66,6 @@ nav .brand-logo {
 
 .header-content {
     font-family: 'Great Vibes', cursive;
-    /*font-family: 'Tangerine', cursive;*/
     position: relative;
     text-align: left;
     bottom: -8rem;

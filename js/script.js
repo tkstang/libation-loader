@@ -7,6 +7,7 @@ const submit = document.getElementById('submit-search');
 const content = document.getElementById('content');
 const form = document.getElementById('search-form');
 const formRow = document.getElementById('form-row');
+const randomRow = document.getElementById('random-row');
 const landing = document.getElementById('landing');
 const favorites = document.getElementById('favorites-row')
 const loadLanding = document.getElementById('load-landing');
@@ -18,6 +19,7 @@ const linkCat = document.getElementById('search-category');
 const linkRandom = document.getElementById('search-random');
 const searchResults1 = document.getElementById('search-results1');
 const searchResults2 = document.getElementById('search-results2');
+const randomResults = document.getElementById('random-results');
 const searchRow = document.getElementById('search-row');
 const hiddenCard = document.getElementById('hidden');
 const catInput = document.getElementById('cat-select');
@@ -156,7 +158,6 @@ function getRemoteJson(url, settings) {
     return jsonresult;
   })
   .catch(function(error){
-    // Materialize.toast($toastContent, 10000);
     console.log('Your error was: ('+error+') ')
     throw error;
   });
@@ -241,6 +242,9 @@ function removeResults(){
   while (searchResults2.firstChild) {
     searchResults2.removeChild(searchResults2.firstChild);
   }
+  while (randomResults.firstChild) {
+    randomResults.removeChild(randomResults.firstChild);
+  }
 }
 
 // Loads search form to page
@@ -248,8 +252,19 @@ function loadSearchForm(){
 	removeResults();
 	landing.setAttribute("style", "display: none");
 	favorites.setAttribute("style", "display: none");
+  randomRow.setAttribute("style", "display: none");
   form.setAttribute("style", "");
 	formRow.setAttribute("style", "");
+  removeSearchFields();
+}
+
+function loadRandom(){
+	removeResults();
+	landing.setAttribute("style", "display: none");
+	favorites.setAttribute("style", "display: none");
+  form.setAttribute("style", "display: none");
+	formRow.setAttribute("style", "display: none");
+  randomRow.setAttribute("style", "");
   removeSearchFields();
 }
 
@@ -293,6 +308,7 @@ function appendSearchField(searchField){
 loadLanding.addEventListener("click", function(event){
   event.preventDefault();
   removeResults();
+  randomRow.setAttribute("style", "display: none");
   formRow.setAttribute("style", "display: none");
   favorites.setAttribute("style", "display: none");
   landing.setAttribute("style", "");
@@ -344,12 +360,9 @@ linkCat.addEventListener("click", function(event){
 
 linkRandom.addEventListener("click", function(event){
   event.preventDefault();
-  loadSearchForm();
-  form.setAttribute("style", "display: none");
-  //more elegant solution for spacing(single column), this generates break every time random is clicked
-  let resRow = document.getElementById("results-row");
-  let lineBreak = document.createElement('br');
-  resRow.insertBefore(lineBreak, resRow.firstChild);
+  loadRandom();
+  //style random-row for top margin instead of using line breaks
+  // let resRow = document.getElementById("random-row");
   let randomIndex = (Math.floor(Math.random() * allDrinksArr.length));
   let randomDrink = allDrinksArr[randomIndex];
   let div = document.createElement('div');
@@ -361,7 +374,7 @@ linkRandom.addEventListener("click", function(event){
   }
   let recipe = removeFalse(ingsToArray(randomDrink, 'strIngredient', 'strMeasure'));
   div.append(buildCard(picture, title, recipe, instructions));
-  distributeCards(0, div);
+  $('#random-results')[0].append(div);
 })
 
 // linkRandom.addEventListener("click", function(event){
